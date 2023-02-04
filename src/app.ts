@@ -1,12 +1,21 @@
 import express, { Application, Request, Response } from "express";
+import routes from "./routes/routes";
 
 const app: Application = express();
-const port: Number = 3000;
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(routes)
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World");
+  res.json({ status: "API is running" });
 });
 
-app.listen(port, () => {
-  console.log(`Listen on port ${port}`);
+app.listen(PORT, () => {
+  console.info(`server up on port ${PORT}`);
 });
