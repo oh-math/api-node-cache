@@ -33,7 +33,7 @@ export const getUser = async (id: string): Promise<User | null> => {
 };
 
 export const getAllUsers = async (): Promise<User[] | [] | null> => {
-  let userCache: [] | null = getCached(KEY);
+  let userCache = getCached(KEY);
 
   const countUser = await count();
   const userCacheLength = userCache?.length || 0;
