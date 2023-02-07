@@ -1,23 +1,29 @@
 import { Request, Response, Router } from "express";
+import { validate } from "../middleware";
+import { inputUser } from "../schema";
 import {
   createUser,
   deleteUser,
   getAllUsers,
   getUser,
-  updateUser
+  updateUser,
 } from "../service";
 
 const router = Router();
 
-router.post("/users", async (req: Request, res: Response) => {
-  try {
-    const result = await createUser(req.body);
-    res.send(result);
-  } catch (error) {
-    res.status(404);
-    console.error(error);
+router.post(
+  "/users",
+  validate(inputUser),
+  async (req: Request, res: Response) => {
+    try {
+      const result = await createUser(req.body);
+      res.send(result);
+    } catch (error) {
+      res.status(404);
+      console.error(error);
+    }
   }
-});
+);
 
 router.get("/users/:id", async (req: Request, res: Response) => {
   try {
