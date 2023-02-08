@@ -27,6 +27,6 @@ First of all, rename the `.env.example` file to only `.env`
   
     npx prisma migrate dev --name init
 
-`4. Run project`
+`5. Run project`
 
     npm run start
