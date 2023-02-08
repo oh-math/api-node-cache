@@ -7,9 +7,20 @@ I developed this API using express for learning purposes of the express framewor
 - Prisma
 - node-cache for caching
 
+### Clone the repo
+
+```bash
+# using https protocol
+git clone https://github.com/oh-math/api-node-cache.git
+
+# using ssh protocol
+git clone git@github.com:oh-math/api-node-cache.git
+```
+
+
 ### Run locally
 
-First of all, rename the `.env.example` file to only `.env`
+After cloning the repo, rename the `.env.example` file to only `.env`
 
 `1. Install project dependencies`
     
