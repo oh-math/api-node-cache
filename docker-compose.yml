@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    image: mysql:latest
+    container_name: api-node-cache
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
