@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { validate } from "../middleware";
-import { inputUser } from "../schema";
+import * as userSchema from "../schema/user.schema";
 import {
   createUser,
   deleteUser,
@@ -13,7 +13,7 @@ const router = Router();
 
 router.post(
   "/users",
-  validate(inputUser),
+  validate(userSchema.createUser),
   async (req: Request, res: Response) => {
     try {
       const result = await createUser(req.body);
@@ -46,15 +46,19 @@ router.get("/users/", async (req: Request, res: Response) => {
   }
 });
 
-router.put("/users/:id", async (req: Request, res: Response) => {
-  try {
-    const result = await updateUser(req.params.id, req.body);
-    res.send(result);
-  } catch (error) {
-    res.status(404);
-    console.error(error);
+router.put(
+  "/users/:id",
+  validate(userSchema.updateUser),
+  async (req: Request, res: Response) => {
+    try {
+      const result = await updateUser(req.params.id, req.body);
+      res.send(result);
+    } catch (error) {
+      res.status(404);
+      console.error(error);
+    }
   }
-});
+);
 
 router.delete("/users/:id", async (req: Request, res: Response) => {
   try {
