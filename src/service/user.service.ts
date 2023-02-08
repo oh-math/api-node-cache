@@ -1,8 +1,5 @@
 import { User } from "@prisma/client";
-import { getCached, set } from "../cache/user.cache";
 import prisma from "../prisma/prisma.service";
-
-const KEY = "user-list";
 
 const count = async (): Promise<number> => {
   return await prisma.user.count();
@@ -33,27 +30,13 @@ export const getUser = async (id: string): Promise<User | null> => {
 };
 
 export const getAllUsers = async (): Promise<User[] | [] | null> => {
-  let userCache = getCached(KEY);
+  const result = await prisma.user.findMany({
+    include: {
+      posts: {},
+    },
+  });
 
-  const countUser = await count();
-  const userCacheLength = userCache?.length || 0;
-
-  if (countUser > userCacheLength || countUser < userCacheLength) {
-    const result = await prisma.user.findMany({
-      include: {
-        posts: {},
-      },
-    });
-
-    set(KEY, result);
-    userCache = getCached(KEY);
-
-    console.log('QUERY FEITA');
-    
-    return userCache;
-  }
-
-  return userCache;
+  return result;
 };
 
 export const updateUser = async (

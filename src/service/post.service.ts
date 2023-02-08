@@ -1,5 +1,12 @@
 import { Post } from "@prisma/client";
+import { getCached, set } from "../cache/user.cache";
 import prisma from "../prisma/prisma.service";
+
+const KEY = "post-list";
+
+const count = async (): Promise<number> => {
+  return await prisma.post.count();
+};
 
 export const createPost = async (input: any): Promise<Post | null> => {
   const { title, content, published, authorId } = input || {};
@@ -28,9 +35,11 @@ export const getPost = async (id: string): Promise<Post | null> => {
 
 export const getAllPosts = async (): Promise<Post[] | null> => {
   const result = await prisma.post.findMany();
-  
 
-  return result;
+  set(KEY, result);
+  const resultCache = getCached(KEY);
+
+  return resultCache;
 };
 
 export const updatePost = async (
