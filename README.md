@@ -9,7 +9,7 @@ I developed this API using express for learning purposes of the express framewor
 
 ### Run locally
 
-First of, all rename the `.env.example` file to only `.env`
+First of all, rename the `.env.example` file to only `.env`
 
 `1. Install project dependencies`
     
